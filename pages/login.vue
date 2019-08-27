@@ -1,6 +1,6 @@
 <template>
   <div class="login-page">
-    <img class="colors" src="~/assets/img/colors.png" />
+    <img class="colors" src="/img/colors.png" />
     <h1 class="mt-10rem login-title">校园查</h1>
     <v-form ref="form" v-model="valid" lazy-validation>
       <v-container>
