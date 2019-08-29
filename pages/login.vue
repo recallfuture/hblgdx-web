@@ -75,17 +75,19 @@ import { MyncmcApi } from '../api/myncmc'
 
 export default {
   layout: 'clean',
-  data: () => ({
-    valid: false,
-    loading: false,
-    username: this.$store.state.username,
-    jwxtPassword: this.$store.state.jwxtPassword,
-    jxxtPassword: this.$store.state.jxxtPassword,
-    usernameRules: [(v) => !!v || '不能为空！'],
-    jwxtPasswordRules: [(v) => !!v || '不能为空！'],
-    jxxtPasswordRules: [(v) => !!v || '不能为空！'],
-    showPassword: false
-  }),
+  data() {
+    return {
+      valid: false,
+      loading: false,
+      username: this.$store.state.username,
+      jwxtPassword: this.$store.state.jwxtPassword,
+      jxxtPassword: this.$store.state.jxxtPassword,
+      usernameRules: [(v) => !!v || '不能为空！'],
+      jwxtPasswordRules: [(v) => !!v || '不能为空！'],
+      jxxtPasswordRules: [(v) => !!v || '不能为空！'],
+      showPassword: false
+    }
+  },
   methods: {
     async submit() {
       // 校验表单

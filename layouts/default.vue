@@ -2,12 +2,17 @@
   <v-app>
     <v-navigation-drawer v-model="drawer" app>
       <div class="drawer-header">
-        <div class="account-form">
+        <div v-if="$store.state.username" class="account-form">
           <div class="account-name">
-            学号
+            {{ $store.state.username }}
           </div>
           <div class="account-action">
             注销
+          </div>
+        </div>
+        <div v-else class="account-form">
+          <div class="account-action">
+            请登录
           </div>
         </div>
       </div>
