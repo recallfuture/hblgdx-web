@@ -17,13 +17,14 @@
 
 <script>
 export default {
+  middleware: 'needLogin',
   data() {
     return {
       courses: [{ id: '1', name: 'c++' }, { id: '1', name: 'c#' }]
     }
   },
   mounted() {
-    this.$store.commit('changeTitle', '作业查询')
+    this.$store.commit('updateTitle', '作业查询')
   }
 }
 </script>

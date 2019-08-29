@@ -40,7 +40,7 @@
 <script>
 export default {
   mounted() {
-    this.$store.commit('changeTitle', '问题反馈')
+    this.$store.commit('updateTitle', '问题反馈')
   }
 }
 </script>

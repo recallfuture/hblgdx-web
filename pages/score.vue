@@ -22,6 +22,7 @@
 
 <script>
 export default {
+  middleware: 'needLogin',
   data() {
     return {
       scores: [
@@ -33,7 +34,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.commit('changeTitle', '成绩查询')
+    this.$store.commit('updateTitle', '成绩查询')
   }
 }
 </script>

@@ -11,6 +11,7 @@
 
 <script>
 export default {
+  middleware: 'needLogin',
   data() {
     return {
       resources: [
@@ -36,7 +37,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.commit('changeTitle', '资源下载')
+    this.$store.commit('updateTitle', '资源下载')
   }
 }
 </script>

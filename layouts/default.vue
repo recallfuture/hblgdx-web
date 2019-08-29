@@ -29,7 +29,7 @@
     <bottom-nav></bottom-nav>
     <v-app-bar fixed app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title v-text="title" />
+      <v-toolbar-title v-text="$store.state.title" />
     </v-app-bar>
     <v-content>
       <v-container>
@@ -66,11 +66,6 @@ export default {
           to: '/about'
         }
       ]
-    }
-  },
-  computed: {
-    title() {
-      return this.$store.state.title
     }
   }
 }

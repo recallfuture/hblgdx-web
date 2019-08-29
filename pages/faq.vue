@@ -31,7 +31,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.commit('changeTitle', '常见问题')
+    this.$store.commit('updateTitle', '常见问题')
   }
 }
 </script>

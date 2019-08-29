@@ -5,7 +5,7 @@
 <script>
 export default {
   mounted() {
-    this.$store.commit('changeTitle', '关于')
+    this.$store.commit('updateTitle', '关于')
   }
 }
 </script>
