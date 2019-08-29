@@ -15,7 +15,7 @@ export const mutations = {
     state.title = title
   },
 
-  updateUser(state, username, jwxtPassword, jxxtPassword) {
+  updateUser(state, { username, jwxtPassword, jxxtPassword }) {
     state.username = username
     state.jwxtPassword = jwxtPassword
     state.jxxtPassword = jxxtPassword

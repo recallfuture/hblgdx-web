@@ -1,18 +1,18 @@
 import axios from './base'
 
 export class MyncmcApi {
-  login(username, password) {
+  static login(username, password) {
     return axios.post('/myncmc/login', {
       username,
       password
     })
   }
 
-  logout() {
+  static logout() {
     return axios.post('/myncmc/logout')
   }
 
-  getScoreReport() {
+  static getScoreReport() {
     return axios.get('/myncmc/score')
   }
 }
