@@ -1,5 +1,5 @@
 <template>
-  <v-bottom-navigation color="green accent-3" grow app>
+  <v-bottom-navigation grow app>
     <v-btn v-for="(route, index) in routes" :key="index" :to="route.to">
       <span>{{ route.title }}</span>
       <v-icon>{{ route.icon }}</v-icon>
