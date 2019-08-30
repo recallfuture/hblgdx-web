@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container>
     <v-card
       v-for="(item, index) in items"
       :key="index"
@@ -9,7 +9,7 @@
       <v-card-title>{{ item.title }}</v-card-title>
       <v-card-text>{{ item.describe }}</v-card-text>
     </v-card>
-  </div>
+  </v-container>
 </template>
 
 <script>
