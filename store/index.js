@@ -31,10 +31,12 @@ export const mutations = {
   },
 
   logout(state) {
+    state.isLogin = false
     state.isJwxtLogin = undefined
     state.isJxxtLogin = undefined
     state.isMyncmcLogin = undefined
 
+    localStorage.setItem('isLogin', false)
     localStorage.removeItem('isJwxtLogin')
     localStorage.removeItem('isJxxtLogin')
     localStorage.removeItem('isMyncmcLogin')
