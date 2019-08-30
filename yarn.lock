@@ -5536,6 +5536,11 @@ merge-stream@^2.0.0:
   resolved "https://registry.yarnpkg.com/merge-stream/-/merge-stream-2.0.0.tgz#52823629a14dd00c9770fb6ad47dc6310f2c1f60"
   integrity sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==
 
+mescroll.js@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/mescroll.js/-/mescroll.js-1.4.1.tgz#42078bddb65dbf2f9e6d916de090e12c2d2b6a3e"
+  integrity sha512-HkX0+qyyaYRhl4286WAmTkQaC2pJHe6mbpLy0994nzO0CCnDr2zf3gaGppZsTg7UeGlwYx/tFc/al9ojzrcF9g==
+
 methods@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/methods/-/methods-1.1.2.tgz#5529a4d67654134edcc5266656835b0f851afcee"

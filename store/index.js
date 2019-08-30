@@ -7,8 +7,12 @@ export const state = () => ({
   isJwxtLogin: false,
   isJxxtLogin: false,
   isMyncmcLogin: false,
-  courses: localStorage.getItem('courses') || [],
-  scoreReport: localStorage.getItem('scoreReport') || null
+  courses: localStorage.getItem('courses')
+    ? JSON.parse(localStorage.getItem('courses'))
+    : [],
+  scoreReport: localStorage.getItem('scoreReport')
+    ? JSON.parse(localStorage.getItem('scoreReport'))
+    : null
 })
 
 export const mutations = {
@@ -58,7 +62,7 @@ export const mutations = {
 
   updateCourses(state, courses) {
     state.courses = courses
-    localStorage.setItem('courses', courses)
+    localStorage.setItem('courses', JSON.stringify(courses))
   },
 
   removeCourses(state) {
@@ -68,7 +72,7 @@ export const mutations = {
 
   updateScoreReport(state, scoreReoprt) {
     state.scoreReoprt = scoreReoprt
-    localStorage.setItem('scoreReoprt', scoreReoprt)
+    localStorage.setItem('scoreReoprt', JSON.stringify(scoreReoprt))
   },
 
   removeScoreReport(state) {

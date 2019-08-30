@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <notifications group="error" />
     <v-navigation-drawer v-model="drawer" app>
       <div class="drawer-header">
         <div v-if="$store.state.isLogin" class="account-form">

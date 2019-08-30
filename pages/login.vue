@@ -103,18 +103,8 @@ export default {
 
       try {
         // 提交
-        let response
-        response = await MyncmcApi.login(this.username, this.jwxtPassword)
-        if (!this.checkError(response.status)) {
-          this.loading = false
-          return
-        }
-
-        response = await JxxtApi.login(this.username, this.jxxtPassword)
-        if (!this.checkError(response.status)) {
-          this.loading = false
-          return
-        }
+        await MyncmcApi.login(this.username, this.jwxtPassword)
+        await JxxtApi.login(this.username, this.jxxtPassword)
 
         // 登录成功
         this.$store.commit('updateUser', {
@@ -135,35 +125,26 @@ export default {
 
         this.$router.push('/')
       } catch (e) {
-        this.$notify({
-          group: 'error',
-          type: 'error',
-          title: '登陆失败',
-          text: '请检查网络连接'
-        })
+        this.checkError(e.response ? e.response.status : 500)
         this.loading = false
       }
     },
 
     checkError(status) {
-      if (status === 200) {
-        return true
-      } else if (status === 400 || status === 422) {
+      if (status === 400 || status === 422) {
         this.$notify({
           group: 'error',
           type: 'error',
           title: '登陆失败',
           text: '用户名或密码错误'
         })
-        return false
       } else if (status === 401) {
         this.$notify({
           group: 'error',
           type: 'error',
           title: '登陆失败',
-          text: '服务器忙，请稍候再试'
+          text: '请稍候再试'
         })
-        return false
       } else if (status === 403) {
         this.$notify({
           group: 'error',
@@ -171,15 +152,13 @@ export default {
           title: '登陆失败',
           text: '今日已经输错五次密码，请明天再来'
         })
-        return false
       } else {
         this.$notify({
           group: 'error',
           type: 'error',
           title: '登陆失败',
-          text: '请检查网络连接'
+          text: '服务器忙，请稍候再试'
         })
-        return false
       }
     }
   }
