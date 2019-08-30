@@ -49,7 +49,7 @@ export default {
     return {
       mescroll: null, // mescroll实例对象
       mescrollDown: {
-        auto: !this.$store.state.courses,
+        auto: !this.$store.state.scoreReport,
         autoShowLoading: true,
         callback: this.downCallback
       }
