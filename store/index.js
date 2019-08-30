@@ -3,7 +3,7 @@ export const state = () => ({
   username: localStorage.getItem('username') || null,
   jwxtPassword: localStorage.getItem('jwxtPassword') || null,
   jxxtPassword: localStorage.getItem('jxxtPassword') || null,
-  isLogin: false,
+  isLogin: localStorage.getItem('isLogin') || false,
   isJwxtLogin: false,
   isJxxtLogin: false,
   isMyncmcLogin: false,
