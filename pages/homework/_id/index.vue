@@ -1,5 +1,19 @@
 <template>
   <mescroll-vue ref="mescroll" :down="mescrollDown" @init="mescrollInit">
+    <v-dialog v-model="detailDialog">
+      <v-card class="pt-2">
+        <v-card-text>
+          <div v-if="!detail" class="text-center">
+            <v-progress-circular
+              indeterminate
+              color="primary"
+            ></v-progress-circular>
+          </div>
+          <!-- eslint-disable-next-line -->
+          <div v-else v-html="detail" class="title"></div>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
     <v-container>
       <v-row>
         <v-col
@@ -10,7 +24,7 @@
           md="4"
           lg="3"
         >
-          <v-card>
+          <v-card @click="showDetail(homework)">
             <v-card-title class="d-flex flex-row align-center">
               <v-icon v-if="!homework.resultUrl" color="red" class="mr-4"
                 >error</v-icon
@@ -40,13 +54,41 @@ export default {
       mescrollDown: {
         callback: this.downCallback
       },
-      homeworks: [] // 列表数据
+      homeworks: [], // 列表数据
+      detailDialog: false,
+      detail: ''
     }
   },
   mounted() {
     this.$store.commit('updateTitle', '作业查询')
   },
   methods: {
+    async showDetail(homework) {
+      try {
+        this.detail = null
+        this.detailDialog = true
+
+        if (homework.detail) {
+          this.detail = homework.detail
+        }
+
+        const response = await JxxtApi.getHomeworkDetail(homework.id)
+        this.detail = response.data
+        homework.detail = response.data
+      } catch (error) {
+        if (error.response) {
+          this.checkError(error.response.status)
+        } else {
+          this.$notify({
+            group: 'error',
+            type: 'error',
+            title: '登陆失败',
+            text: '请检查网络连接'
+          })
+          window.console.error(error)
+        }
+      }
+    },
     // mescroll组件初始化的回调,可获取到mescroll对象
     mescrollInit(mescroll) {
       this.mescroll = mescroll

@@ -20,6 +20,10 @@ export class JxxtApi {
     return axios.get(`/jxxt/homeworks/${courseId}`)
   }
 
+  static getHomeworkDetail(homeworkId) {
+    return axios.get(`/jxxt/homeworks/detail/${homeworkId}`)
+  }
+
   static getAllCourses() {
     return axios.get('/jxxt/courses')
   }
