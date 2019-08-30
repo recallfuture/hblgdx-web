@@ -72,13 +72,13 @@ export const mutations = {
     localStorage.removeItem('courses')
   },
 
-  updateScoreReport(state, scoreReoprt) {
-    state.scoreReoprt = scoreReoprt
-    localStorage.setItem('scoreReoprt', JSON.stringify(scoreReoprt))
+  updateScoreReport(state, scoreReport) {
+    state.scoreReport = scoreReport
+    localStorage.setItem('scoreReport', JSON.stringify(scoreReport))
   },
 
   removeScoreReport(state) {
-    state.scoreReoprt = undefined
-    localStorage.removeItem('scoreReoprt')
+    state.scoreReport = undefined
+    localStorage.removeItem('scoreReport')
   }
 }

@@ -1,40 +1,135 @@
 <template>
-  <div>
-    <v-card class="mb-2">
-      <v-card-text>
-        <label>姓名：</label><br />
-        <label>学号：</label><br />
-        <label>系所：</label><br />
-        <label>班级：</label>
-      </v-card-text>
-    </v-card>
+  <mescroll-vue ref="mescroll" :down="mescrollDown" @init="mescrollInit">
+    <div v-if="$store.state.scoreReport">
+      <v-card class="mb-2">
+        <v-card-text class="d-flex flex-column">
+          <label>姓名：{{ $store.state.scoreReport.name }}</label>
+          <label>学号：{{ $store.state.scoreReport.number }}</label>
+          <label>系所：{{ $store.state.scoreReport.departmentName }}</label>
+          <label>班级：{{ $store.state.scoreReport.className }}</label>
+        </v-card-text>
+      </v-card>
 
-    <v-card v-for="(score, index) in scores" :key="index" class="mb-2">
-      <v-card-text class="d-flex flex-row align-center">
-        <v-avatar size="35" color="green" class="mr-4">{{
-          score.score
-        }}</v-avatar>
-        {{ score.name }}
-      </v-card-text>
-    </v-card>
-  </div>
+      <v-card
+        v-for="(score, index) in $store.state.scoreReport.scores"
+        :key="index"
+        class="mb-2"
+      >
+        <v-card-text class="d-flex flex-row align-center">
+          <v-avatar
+            size="35"
+            :color="score.score > 60 ? 'green' : 'red'"
+            class="mr-4"
+            >{{ score.score }}</v-avatar
+          >
+          {{ score.name }}
+        </v-card-text>
+      </v-card>
+    </div>
+  </mescroll-vue>
 </template>
 
 <script>
+import MescrollVue from 'mescroll.js/mescroll.vue'
+import { MyncmcApi } from '../../api/myncmc'
+
 export default {
   middleware: 'needLogin',
+  components: {
+    MescrollVue // 注册mescroll组件
+  },
   data() {
     return {
-      scores: [
-        { name: '软件工程', score: 80 },
-        { name: '网络原理', score: 40 },
-        { name: '数据结构', score: 60 },
-        { name: '操作系统', score: 90 }
-      ]
+      mescroll: null, // mescroll实例对象
+      mescrollDown: {
+        auto: false,
+        callback: this.downCallback
+      }
     }
   },
   mounted() {
     this.$store.commit('updateTitle', '成绩查询')
+  },
+  methods: {
+    // mescroll组件初始化的回调,可获取到mescroll对象
+    mescrollInit(mescroll) {
+      this.mescroll = mescroll
+
+      // 请求此接口比较费时，所以尽可能减少刷新
+      if (!this.$store.state.scoreReport) {
+        window.console.log(mescroll)
+        mescroll.triggerDownScroll()
+      }
+    },
+    async downCallback(mescroll) {
+      try {
+        if (!this.$store.state.isMyncmcLogin) {
+          await MyncmcApi.login(
+            this.$store.state.username,
+            this.$store.state.jwxtPassword
+          )
+          this.$store.commit('updateMyncmcLogin', true)
+        }
+
+        // 获取所有课程
+        const response = await MyncmcApi.getScoreReport()
+        const scoreReport = response.data
+
+        this.$store.commit('updateScoreReport', scoreReport)
+
+        // 数据渲染成功后,隐藏下拉刷新的状态
+        this.$nextTick(() => {
+          mescroll.endSuccess()
+        })
+      } catch (error) {
+        if (error.response) {
+          this.checkError(error.response.status)
+        } else {
+          this.$notify({
+            group: 'error',
+            type: 'error',
+            title: '登陆失败',
+            text: '请检查网络连接'
+          })
+          window.console.error(error)
+        }
+        mescroll.endErr()
+      }
+    },
+    checkError(status) {
+      if (status === 400 || status === 422) {
+        this.$notify({
+          group: 'error',
+          type: 'error',
+          title: '登陆失败',
+          text: '用户名或密码错误'
+        })
+        const router = this.$router
+        setTimeout(() => router.push('/login'), 1000)
+      } else if (status === 401) {
+        this.$notify({
+          group: 'error',
+          type: 'warning',
+          title: '登陆失败',
+          text: '服务器忙，请稍候再试'
+        })
+        this.$store.commit('updateMyncmcLogin', false)
+      } else if (status === 403) {
+        this.$notify({
+          group: 'error',
+          type: 'error',
+          title: '登陆失败',
+          text: '您的帐号已被锁定，请明天再试'
+        })
+      } else {
+        this.$notify({
+          group: 'error',
+          type: 'error',
+          title: '登陆失败',
+          text: '请检查网络连接'
+        })
+      }
+    }
   }
 }
 </script>
