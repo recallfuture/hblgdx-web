@@ -3,7 +3,7 @@
     <mescroll-vue ref="mescroll" :down="mescrollDown" @init="mescrollInit">
       <v-card class="mb-2">
         <v-card-text class="text-center">
-          有0门课程有待交作业
+          有{{ reminderCount }}门课程有待交作业
         </v-card-text>
       </v-card>
 
@@ -13,7 +13,10 @@
         class="mb-2"
       >
         <v-card-text class="d-flex flex-row align-center">
-          <v-icon color="orange" class="mr-4">bookmark</v-icon>
+          <v-icon v-if="!course.isReminder" color="orange" class="mr-4"
+            >bookmark</v-icon
+          >
+          <v-icon v-else color="red" class="mr-4">error</v-icon>
           {{ course.name }}
         </v-card-text>
       </v-card>
@@ -40,6 +43,21 @@ export default {
       dataList: [] // 列表数据
     }
   },
+  computed: {
+    reminderCount() {
+      let count = 0
+      const courses = this.$store.state.courses
+      for (const key in courses) {
+        if (courses.hasOwnProperty(key)) {
+          const e = courses[key]
+          if (e.isReminder) {
+            count++
+          }
+        }
+      }
+      return count
+    }
+  },
   mounted() {
     this.$store.commit('updateTitle', '作业查询')
   },
@@ -58,8 +76,25 @@ export default {
           this.$store.commit('updateJxxtLogin', true)
         }
 
-        const response = await JxxtApi.getAllCourses()
-        this.$store.commit('updateCourses', response.data)
+        // 获取所有课程
+        let response = await JxxtApi.getAllCourses()
+        const courses = response.data
+
+        // 获取所有有待交作业的课程
+        response = await JxxtApi.getReminderList()
+        const reminders = response.data
+
+        const result = {}
+        courses.forEach((e) => {
+          result[e.id] = e
+        })
+
+        reminders.forEach((e) => {
+          e.isReminder = true
+          result[e.id] = e
+        })
+
+        this.$store.commit('updateCourses', result)
 
         // 数据渲染成功后,隐藏下拉刷新的状态
         this.$nextTick(() => {
