@@ -1,6 +1,11 @@
 <template>
   <v-bottom-navigation grow app>
-    <v-btn v-for="(route, index) in routes" :key="index" :to="route.to">
+    <v-btn
+      v-for="(route, index) in routes"
+      :key="index"
+      :to="route.to"
+      style="height: inherit;"
+    >
       <span>{{ route.title }}</span>
       <v-icon>{{ route.icon }}</v-icon>
     </v-btn>

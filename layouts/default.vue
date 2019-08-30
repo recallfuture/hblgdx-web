@@ -135,4 +135,11 @@ export default {
     }
   }
 }
+
+.mescroll {
+  position: fixed;
+  top: 60px;
+  bottom: 0;
+  height: auto; /* 如设置bottom:50px,则需height:auto才能生效 */
+}
 </style>

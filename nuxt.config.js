@@ -52,8 +52,20 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/pwa'
+    ['@nuxtjs/pwa', {}]
   ],
+  icon: {
+    iconSrc: 'static/icon.png'
+  },
+  // pwa manifest
+  manifest: {
+    name: '校园查web',
+    short_name: '校园查',
+    start_url: '/',
+    background_color: '#444',
+    description: '华北理工大学的辅助查询系统',
+    lang: 'zh-CN'
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
