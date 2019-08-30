@@ -1,23 +1,12 @@
 <template>
   <div>
     <mescroll-vue ref="mescroll" :down="mescrollDown" @init="mescrollInit">
-      <v-card class="mb-2">
-        <v-card-text class="text-center">
-          有{{ reminderCount }}门课程有待交作业
-        </v-card-text>
-      </v-card>
-
-      <v-card
-        v-for="(course, index) in $store.state.courses"
-        :key="index"
-        class="mb-2"
-      >
+      <v-card v-for="(homework, index) in homeworks" :key="index" class="mb-2">
         <v-card-text class="d-flex flex-row align-center">
-          <v-icon v-if="!course.isReminder" color="orange" class="mr-4"
-            >bookmark</v-icon
+          <v-icon v-if="!homework.resultUrl" color="red" class="mr-4"
+            >error</v-icon
           >
-          <v-icon v-else color="red" class="mr-4">error</v-icon>
-          {{ course.name }}
+          {{ homework.title }}
         </v-card-text>
       </v-card>
     </mescroll-vue>
@@ -26,7 +15,7 @@
 
 <script>
 import MescrollVue from 'mescroll.js/mescroll.vue'
-import { JxxtApi } from '../api/jxxt'
+import { JxxtApi } from '../../../api/jxxt'
 
 export default {
   middleware: 'needLogin',
@@ -40,22 +29,7 @@ export default {
         autoShowLoading: true,
         callback: this.downCallback
       },
-      dataList: [] // 列表数据
-    }
-  },
-  computed: {
-    reminderCount() {
-      let count = 0
-      const courses = this.$store.state.courses
-      for (const key in courses) {
-        if (courses.hasOwnProperty(key)) {
-          const e = courses[key]
-          if (e.isReminder) {
-            count++
-          }
-        }
-      }
-      return count
+      homeworks: [] // 列表数据
     }
   },
   mounted() {
@@ -76,25 +50,10 @@ export default {
           this.$store.commit('updateJxxtLogin', true)
         }
 
-        // 获取所有课程
-        let response = await JxxtApi.getAllCourses()
-        const courses = response.data
-
         // 获取所有有待交作业的课程
-        response = await JxxtApi.getReminderList()
-        const reminders = response.data
-
-        const result = {}
-        courses.forEach((e) => {
-          result[e.id] = e
-        })
-
-        reminders.forEach((e) => {
-          e.isReminder = true
-          result[e.id] = e
-        })
-
-        this.$store.commit('updateCourses', result)
+        const courseId = this.$route.params.id
+        const response = await JxxtApi.getHomeworkList(courseId)
+        this.homeworks = response.data
 
         // 数据渲染成功后,隐藏下拉刷新的状态
         this.$nextTick(() => {
