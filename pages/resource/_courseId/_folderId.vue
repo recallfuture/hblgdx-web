@@ -59,7 +59,10 @@ export default {
       resources: [],
       mescroll: null, // mescroll实例对象
       mescrollDown: {
-        auto: this.$store.state.courses.length === 0,
+        // 当是首页且没获取到资源的时候才刷新
+        auto:
+          this.$store.state.courses.length === 0 &&
+          !this.$route.params.courseId,
         autoShowLoading: true,
         callback: this.downCallback
       }

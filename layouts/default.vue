@@ -76,7 +76,7 @@ export default {
   },
   data() {
     return {
-      drawer: this.$vuetify.breakpoint.mdAndUp,
+      drawer: this.$vuetify.breakpoint.lgAndUp,
       logoutDialog: false,
       items: [
         {
