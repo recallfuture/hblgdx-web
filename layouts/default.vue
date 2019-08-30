@@ -38,7 +38,7 @@
       <v-toolbar-title v-text="$store.state.title" />
     </v-app-bar>
     <v-content>
-      <v-container>
+      <v-container style="height: 100%;">
         <nuxt />
       </v-container>
     </v-content>

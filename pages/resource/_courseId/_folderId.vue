@@ -1,14 +1,37 @@
 <template>
   <div style="height: 100%;">
     <mescroll-vue ref="mescroll" :down="mescrollDown" @init="mescrollInit">
-      <v-card v-for="(homework, index) in homeworks" :key="index" class="mb-2">
-        <v-card-text class="d-flex flex-row align-center">
-          <v-icon v-if="!homework.resultUrl" color="red" class="mr-4"
-            >error</v-icon
-          >
-          {{ homework.title }}
-        </v-card-text>
-      </v-card>
+      <!-- 非首页的情况，展示资源目录 -->
+      <div v-if="courseId">
+        <v-card
+          v-for="(resource, index) in resources"
+          :key="index"
+          class="mb-2"
+          @click="onClick(resource)"
+        >
+          <v-card-text class="d-flex flex-row align-center">
+            <v-icon v-if="resource.type === 0" color="white" class="mr-4"
+              >folder</v-icon
+            >
+            <v-icon v-else color="white" class="mr-4">insert_drive_file</v-icon>
+            {{ resource.name }}
+          </v-card-text>
+        </v-card>
+      </div>
+      <!-- 首页情况，展示所有课程目录 -->
+      <div v-else>
+        <v-card
+          v-for="(course, index) in $store.state.courses"
+          :key="index"
+          class="mb-2"
+          :to="'/resource/' + course.id"
+        >
+          <v-card-text class="d-flex flex-row align-center">
+            <v-icon color="white" class="mr-4">folder</v-icon>
+            {{ course.name }}
+          </v-card-text>
+        </v-card>
+      </div>
     </mescroll-vue>
   </div>
 </template>
@@ -24,18 +47,27 @@ export default {
   },
   data() {
     return {
+      courseId: this.$route.params.courseId,
+      folderId: this.$route.params.folderId,
+      resources: [],
       mescroll: null, // mescroll实例对象
       mescrollDown: {
         autoShowLoading: true,
         callback: this.downCallback
-      },
-      homeworks: [] // 列表数据
+      }
     }
   },
   mounted() {
-    this.$store.commit('updateTitle', '作业查询')
+    this.$store.commit('updateTitle', '课程资源')
   },
   methods: {
+    onClick(resource) {
+      if (resource.type === 0) {
+        this.$router.push(`/resource/${this.courseId}/${resource.folderId}`)
+      } else {
+        location.href = resource.downloadUrl
+      }
+    },
     // mescroll组件初始化的回调,可获取到mescroll对象
     mescrollInit(mescroll) {
       this.mescroll = mescroll
@@ -50,10 +82,19 @@ export default {
           this.$store.commit('updateJxxtLogin', true)
         }
 
-        // 获取所有有待交作业的课程
-        const courseId = this.$route.params.id
-        const response = await JxxtApi.getHomeworkList(courseId)
-        this.homeworks = response.data
+        // 获取路由参数
+        const { courseId, folderId } = this.$route.params
+
+        if (!courseId) {
+          // 获取所有课程
+          const response = await JxxtApi.getAllCourses()
+          const courses = response.data
+          this.$store.commit('updateCourses', courses)
+        } else {
+          // 获取所有课程
+          const response = await JxxtApi.getResourceList(courseId, folderId)
+          this.resources = response.data
+        }
 
         // 数据渲染成功后,隐藏下拉刷新的状态
         this.$nextTick(() => {

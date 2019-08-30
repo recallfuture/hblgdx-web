@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height: 100%;">
     <mescroll-vue ref="mescroll" :down="mescrollDown" @init="mescrollInit">
       <v-card class="mb-2">
         <v-card-text class="text-center">
@@ -40,8 +40,7 @@ export default {
       mescrollDown: {
         autoShowLoading: true,
         callback: this.downCallback
-      },
-      dataList: [] // 列表数据
+      }
     }
   },
   computed: {

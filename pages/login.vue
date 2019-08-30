@@ -1,5 +1,5 @@
 <template>
-  <div class="login-page">
+  <div class="login-page" style="height: 100%;">
     <notifications group="error" />
 
     <img class="colors" src="/img/colors.png" />
