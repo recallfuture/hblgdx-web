@@ -9,10 +9,9 @@
         @click="onClick(resource)"
       >
         <v-card-text class="d-flex flex-row align-center">
-          <v-icon v-if="resource.type === 0" color="white" class="mr-4"
-            >folder</v-icon
-          >
-          <v-icon v-else color="white" class="mr-4">insert_drive_file</v-icon>
+          <v-icon color="white" class="mr-4">{{
+            resource.type === 0 ? 'folder' : 'insert_drive_file'
+          }}</v-icon>
           {{ resource.name }}
         </v-card-text>
       </v-card>

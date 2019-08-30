@@ -1,12 +1,13 @@
 <template>
   <mescroll-vue ref="mescroll" :down="mescrollDown" @init="mescrollInit">
     <v-card v-for="(homework, index) in homeworks" :key="index" class="mb-2">
-      <v-card-text class="d-flex flex-row align-center">
+      <v-card-title class="d-flex flex-row align-center">
         <v-icon v-if="!homework.resultUrl" color="red" class="mr-4"
           >error</v-icon
-        >
+        ><v-icon v-else color="green" class="mr-4">check</v-icon>
         {{ homework.title }}
-      </v-card-text>
+      </v-card-title>
+      <v-card-text> 提交日期：{{ homework.dateTime }} </v-card-text>
     </v-card>
   </mescroll-vue>
 </template>
