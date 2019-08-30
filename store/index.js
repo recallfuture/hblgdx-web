@@ -3,6 +3,7 @@ export const state = () => ({
   username: localStorage.getItem('username') || null,
   jwxtPassword: localStorage.getItem('jwxtPassword') || null,
   jxxtPassword: localStorage.getItem('jxxtPassword') || null,
+  isLogin: false,
   isJwxtLogin: false,
   isJxxtLogin: false,
   isMyncmcLogin: false,
@@ -25,6 +26,21 @@ export const mutations = {
     localStorage.setItem('jxxtPassword', jxxtPassword)
   },
 
+  logout(state) {
+    state.isJwxtLogin = undefined
+    state.isJxxtLogin = undefined
+    state.isMyncmcLogin = undefined
+
+    localStorage.removeItem('isJwxtLogin')
+    localStorage.removeItem('isJxxtLogin')
+    localStorage.removeItem('isMyncmcLogin')
+  },
+
+  updateIsLogin(state, isLogin) {
+    state.isLogin = isLogin
+    localStorage.setItem('isLogin', isLogin)
+  },
+
   updateJwxtLogin(state, isJwxtLogin) {
     state.isJwxtLogin = isJwxtLogin
     localStorage.setItem('isJwxtLogin', isJwxtLogin)
@@ -45,8 +61,18 @@ export const mutations = {
     localStorage.setItem('courses', courses)
   },
 
+  removeCourses(state) {
+    state.courses = undefined
+    localStorage.removeItem('courses')
+  },
+
   updateScoreReport(state, scoreReoprt) {
     state.scoreReoprt = scoreReoprt
     localStorage.setItem('scoreReoprt', scoreReoprt)
+  },
+
+  removeScoreReport(state) {
+    state.scoreReoprt = undefined
+    localStorage.removeItem('scoreReoprt')
   }
 }

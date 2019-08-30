@@ -2,16 +2,16 @@
   <v-app>
     <v-navigation-drawer v-model="drawer" app>
       <div class="drawer-header">
-        <div v-if="$store.state.username" class="account-form">
+        <div v-if="$store.state.isLogin" class="account-form">
           <div class="account-name">
             {{ $store.state.username }}
           </div>
-          <div class="account-action">
+          <div class="account-action" @click.stop="logoutDialog = true">
             注销
           </div>
         </div>
         <div v-else class="account-form">
-          <div class="account-action">
+          <div class="account-action" @click.stop="$router.push('/login')">
             请登录
           </div>
         </div>
@@ -41,6 +41,30 @@
         <nuxt />
       </v-container>
     </v-content>
+
+    <v-dialog v-model="logoutDialog" width="500">
+      <v-card>
+        <v-card-title class="headline">
+          确定注销？
+        </v-card-title>
+
+        <v-card-text>
+          注销后将需要重新登录才能够使用所有功能
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+          <div class="flex-grow-1"></div>
+          <v-btn color="red" outlined @click="onLogout()">
+            确定
+          </v-btn>
+          <v-btn color="red" @click="logoutDialog = false">
+            取消
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-app>
 </template>
 
@@ -54,6 +78,7 @@ export default {
   data() {
     return {
       drawer: false,
+      logoutDialog: false,
       items: [
         {
           title: '常见问题',
@@ -71,6 +96,12 @@ export default {
           to: '/about'
         }
       ]
+    }
+  },
+  methods: {
+    onLogout() {
+      this.$store.commit('logout')
+      this.$router.push('/login')
     }
   }
 }
@@ -101,6 +132,12 @@ export default {
       padding: 5px 15px;
       background-color: red;
       color: white;
+      user-select: none;
+    }
+
+    & > .account-action:hover {
+      background-color: red;
+      opacity: 0.9;
     }
   }
 }

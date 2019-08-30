@@ -122,8 +122,16 @@ export default {
           jwxtPassword: this.jwxtPassword,
           jxxtPassword: this.jxxtPassword
         })
+        this.$store.commit('updateIsLogin', true)
         this.$store.commit('updateJxxtLogin', true)
         this.$store.commit('updateMyncmcLogin', true)
+
+        // 仅当不同用户登录的时候才清理缓存
+        // 充分利用缓存
+        if (this.username !== this.$store.state.username) {
+          this.$store.commit('removeCourses')
+          this.$store.commit('removeScoreReport')
+        }
 
         this.$router.push('/')
       } catch (e) {
@@ -138,7 +146,6 @@ export default {
     },
 
     checkError(status) {
-      window.console.log(status)
       if (status === 200) {
         return true
       } else if (status === 400 || status === 422) {
