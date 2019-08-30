@@ -1,25 +1,33 @@
 <template>
   <mescroll-vue ref="mescroll" :down="mescrollDown" @init="mescrollInit">
-    <v-card class="mb-2">
-      <v-card-text class="text-center">
-        有{{ reminderCount }}门课程有待交作业
-      </v-card-text>
-    </v-card>
+    <v-container>
+      <v-card class="mb-2">
+        <v-card-text class="text-center">
+          有{{ reminderCount }}门课程有待交作业
+        </v-card-text>
+      </v-card>
 
-    <v-card
-      v-for="(course, index) in $store.state.courses"
-      :key="index"
-      class="mb-2"
-      :to="'/homework/' + course.id"
-    >
-      <v-card-text class="d-flex flex-row align-center">
-        <v-icon v-if="!course.isReminder" color="orange" class="mr-4"
-          >bookmark</v-icon
+      <v-row>
+        <v-col
+          v-for="(course, index) in $store.state.courses"
+          :key="index"
+          cols="12"
+          sm="6"
+          md="4"
+          lg="3"
         >
-        <v-icon v-else color="red" class="mr-4">error</v-icon>
-        {{ course.name }}
-      </v-card-text>
-    </v-card>
+          <v-card :to="'/homework/' + course.id">
+            <v-card-text class="d-flex flex-row align-center">
+              <v-icon v-if="!course.isReminder" color="orange" class="mr-4"
+                >bookmark</v-icon
+              >
+              <v-icon v-else color="red" class="mr-4">error</v-icon>
+              {{ course.name }}
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
   </mescroll-vue>
 </template>
 

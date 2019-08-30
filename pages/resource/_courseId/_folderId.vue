@@ -1,35 +1,45 @@
 <template>
   <mescroll-vue ref="mescroll" :down="mescrollDown" @init="mescrollInit">
-    <!-- 非首页的情况，展示资源目录 -->
-    <div v-if="courseId">
-      <v-card
-        v-for="(resource, index) in resources"
-        :key="index"
-        class="mb-2"
-        @click="onClick(resource)"
-      >
-        <v-card-text class="d-flex flex-row align-center">
-          <v-icon color="white" class="mr-4">{{
-            resource.type === 0 ? 'folder' : 'insert_drive_file'
-          }}</v-icon>
-          {{ resource.name }}
-        </v-card-text>
-      </v-card>
-    </div>
-    <!-- 首页情况，展示所有课程目录 -->
-    <div v-else>
-      <v-card
-        v-for="(course, index) in $store.state.courses"
-        :key="index"
-        class="mb-2"
-        :to="'/resource/' + course.id"
-      >
-        <v-card-text class="d-flex flex-row align-center">
-          <v-icon color="white" class="mr-4">folder</v-icon>
-          {{ course.name }}
-        </v-card-text>
-      </v-card>
-    </div>
+    <v-container>
+      <!-- 非首页的情况，展示资源目录 -->
+      <v-row v-if="courseId">
+        <v-col
+          v-for="(resource, index) in resources"
+          :key="index"
+          cols="12"
+          sm="6"
+          md="4"
+          lg="3"
+        >
+          <v-card @click="onClick(resource)">
+            <v-card-text class="d-flex flex-row align-center">
+              <v-icon color="white" class="mr-4">{{
+                resource.type === 0 ? 'folder' : 'insert_drive_file'
+              }}</v-icon>
+              {{ resource.name }}
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+      <!-- 首页情况，展示所有课程目录 -->
+      <v-row v-else>
+        <v-col
+          v-for="(course, index) in $store.state.courses"
+          :key="index"
+          cols="12"
+          sm="6"
+          md="4"
+          lg="3"
+        >
+          <v-card :to="'/resource/' + course.id">
+            <v-card-text class="d-flex flex-row align-center">
+              <v-icon color="white" class="mr-4">folder</v-icon>
+              {{ course.name }}
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
   </mescroll-vue>
 </template>
 

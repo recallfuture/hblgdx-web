@@ -1,6 +1,6 @@
 <template>
   <mescroll-vue ref="mescroll" :down="mescrollDown" @init="mescrollInit">
-    <div v-if="$store.state.scoreReport">
+    <v-container v-if="$store.state.scoreReport">
       <v-card class="mb-2">
         <v-card-text class="d-flex flex-column">
           <label>姓名：{{ $store.state.scoreReport.name }}</label>
@@ -10,22 +10,29 @@
         </v-card-text>
       </v-card>
 
-      <v-card
-        v-for="(score, index) in $store.state.scoreReport.scores"
-        :key="index"
-        class="mb-2"
-      >
-        <v-card-text class="d-flex flex-row align-center">
-          <v-avatar
-            size="35"
-            :color="score.score > 60 ? 'green' : 'red'"
-            class="mr-4"
-            >{{ score.score }}</v-avatar
-          >
-          {{ score.name }}
-        </v-card-text>
-      </v-card>
-    </div>
+      <v-row>
+        <v-col
+          v-for="(score, index) in $store.state.scoreReport.scores"
+          :key="index"
+          cols="12"
+          sm="6"
+          md="4"
+          lg="3"
+        >
+          <v-card>
+            <v-card-text class="d-flex flex-row align-center">
+              <v-avatar
+                size="35"
+                :color="score.score > 60 ? 'green' : 'red'"
+                class="mr-4"
+                >{{ score.score }}</v-avatar
+              >
+              {{ score.name }}
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
   </mescroll-vue>
 </template>
 

@@ -1,10 +1,10 @@
 <template>
-  <v-container>
+  <div>
     <v-card v-for="(item, index) in items" :key="index" class="mb-4">
       <v-card-title>{{ item.q }}</v-card-title>
       <v-card-text>{{ item.a }}</v-card-text>
     </v-card>
-  </v-container>
+  </div>
 </template>
 
 <script>

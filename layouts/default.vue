@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <notifications group="error" />
-    <v-navigation-drawer v-model="drawer" app>
+    <v-navigation-drawer v-model="drawer" fixed app>
       <div class="drawer-header">
         <div v-if="$store.state.isLogin" class="account-form">
           <div class="account-name">
@@ -78,7 +78,7 @@ export default {
   },
   data() {
     return {
-      drawer: false,
+      drawer: this.$vuetify.breakpoint.mdAndUp,
       logoutDialog: false,
       items: [
         {

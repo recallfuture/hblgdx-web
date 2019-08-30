@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <div>
     <v-card class="mb-4 text-center">
       <v-card-text>
         <p class="title font-weight-bold">向我发送反馈邮件</p>
@@ -34,7 +34,7 @@
       <p>感谢每一位反馈者为这个项目作出的贡献</p>
       <v-icon color="red">favorite</v-icon>
     </div>
-  </v-container>
+  </div>
 </template>
 
 <script>

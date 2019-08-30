@@ -5,7 +5,7 @@
     <img class="colors" src="/img/colors.png" />
     <h1 class="mt-10rem login-title">校园查</h1>
     <v-form ref="form" v-model="valid" lazy-validation>
-      <v-container>
+      <v-container style="max-width: 500px;">
         <v-row>
           <v-col cols="12">
             <v-text-field
