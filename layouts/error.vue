@@ -30,8 +30,8 @@ export default {
   },
   data() {
     return {
-      pageNotFound: '404 Not Found',
-      otherError: 'An error occurred'
+      pageNotFound: '你所找的页面不见啦',
+      otherError: '出了点问题，请刷新重试'
     }
   }
 }

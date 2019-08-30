@@ -82,11 +82,6 @@ export default {
       logoutDialog: false,
       items: [
         {
-          title: '常见问题',
-          icon: 'help',
-          to: '/faq'
-        },
-        {
           title: '问题反馈',
           icon: 'question_answer',
           to: '/feedback'
