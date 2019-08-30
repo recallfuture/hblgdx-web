@@ -49,7 +49,8 @@ export default {
     return {
       mescroll: null, // mescroll实例对象
       mescrollDown: {
-        auto: false,
+        auto: !this.$store.state.courses,
+        autoShowLoading: true,
         callback: this.downCallback
       }
     }
@@ -61,12 +62,6 @@ export default {
     // mescroll组件初始化的回调,可获取到mescroll对象
     mescrollInit(mescroll) {
       this.mescroll = mescroll
-
-      // 请求此接口比较费时，所以尽可能减少刷新
-      if (!this.$store.state.scoreReport) {
-        window.console.log(mescroll)
-        mescroll.triggerDownScroll()
-      }
     },
     async downCallback(mescroll) {
       try {

@@ -52,6 +52,7 @@ export default {
     return {
       mescroll: null, // mescroll实例对象
       mescrollDown: {
+        autoShowLoading: true,
         callback: this.downCallback
       },
       homeworks: [], // 列表数据

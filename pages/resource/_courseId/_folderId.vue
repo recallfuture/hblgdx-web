@@ -59,6 +59,8 @@ export default {
       resources: [],
       mescroll: null, // mescroll实例对象
       mescrollDown: {
+        auto: !this.$store.state.courses,
+        autoShowLoading: true,
         callback: this.downCallback
       }
     }

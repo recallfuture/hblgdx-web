@@ -7,9 +7,7 @@ export const state = () => ({
   isJwxtLogin: false,
   isJxxtLogin: false,
   isMyncmcLogin: false,
-  courses: localStorage.getItem('courses')
-    ? JSON.parse(localStorage.getItem('courses'))
-    : [],
+  courses: [],
   scoreReport: localStorage.getItem('scoreReport')
     ? JSON.parse(localStorage.getItem('scoreReport'))
     : null
@@ -64,12 +62,10 @@ export const mutations = {
 
   updateCourses(state, courses) {
     state.courses = courses
-    localStorage.setItem('courses', JSON.stringify(courses))
   },
 
   removeCourses(state) {
     state.courses = undefined
-    localStorage.removeItem('courses')
   },
 
   updateScoreReport(state, scoreReport) {
