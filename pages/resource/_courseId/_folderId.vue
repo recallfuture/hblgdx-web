@@ -1,39 +1,37 @@
 <template>
-  <div style="height: 100%;">
-    <mescroll-vue ref="mescroll" :down="mescrollDown" @init="mescrollInit">
-      <!-- 非首页的情况，展示资源目录 -->
-      <div v-if="courseId">
-        <v-card
-          v-for="(resource, index) in resources"
-          :key="index"
-          class="mb-2"
-          @click="onClick(resource)"
-        >
-          <v-card-text class="d-flex flex-row align-center">
-            <v-icon v-if="resource.type === 0" color="white" class="mr-4"
-              >folder</v-icon
-            >
-            <v-icon v-else color="white" class="mr-4">insert_drive_file</v-icon>
-            {{ resource.name }}
-          </v-card-text>
-        </v-card>
-      </div>
-      <!-- 首页情况，展示所有课程目录 -->
-      <div v-else>
-        <v-card
-          v-for="(course, index) in $store.state.courses"
-          :key="index"
-          class="mb-2"
-          :to="'/resource/' + course.id"
-        >
-          <v-card-text class="d-flex flex-row align-center">
-            <v-icon color="white" class="mr-4">folder</v-icon>
-            {{ course.name }}
-          </v-card-text>
-        </v-card>
-      </div>
-    </mescroll-vue>
-  </div>
+  <mescroll-vue ref="mescroll" :down="mescrollDown" @init="mescrollInit">
+    <!-- 非首页的情况，展示资源目录 -->
+    <div v-if="courseId">
+      <v-card
+        v-for="(resource, index) in resources"
+        :key="index"
+        class="mb-2"
+        @click="onClick(resource)"
+      >
+        <v-card-text class="d-flex flex-row align-center">
+          <v-icon v-if="resource.type === 0" color="white" class="mr-4"
+            >folder</v-icon
+          >
+          <v-icon v-else color="white" class="mr-4">insert_drive_file</v-icon>
+          {{ resource.name }}
+        </v-card-text>
+      </v-card>
+    </div>
+    <!-- 首页情况，展示所有课程目录 -->
+    <div v-else>
+      <v-card
+        v-for="(course, index) in $store.state.courses"
+        :key="index"
+        class="mb-2"
+        :to="'/resource/' + course.id"
+      >
+        <v-card-text class="d-flex flex-row align-center">
+          <v-icon color="white" class="mr-4">folder</v-icon>
+          {{ course.name }}
+        </v-card-text>
+      </v-card>
+    </div>
+  </mescroll-vue>
 </template>
 
 <script>
