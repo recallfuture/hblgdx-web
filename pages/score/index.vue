@@ -73,7 +73,7 @@ export default {
           this.$store.commit('updateMyncmcLogin', true)
         }
 
-        // 获取所有课程
+        // 获取成绩单
         const response = await MyncmcApi.getScoreReport()
         const scoreReport = response.data
 

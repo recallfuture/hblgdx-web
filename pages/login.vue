@@ -106,6 +106,13 @@ export default {
         await MyncmcApi.login(this.username, this.jwxtPassword)
         await JxxtApi.login(this.username, this.jxxtPassword)
 
+        // 仅当不同用户登录的时候才清理缓存
+        // 充分利用缓存
+        if (this.username !== this.$store.state.username) {
+          this.$store.commit('removeCourses')
+          this.$store.commit('removeScoreReport')
+        }
+
         // 登录成功
         this.$store.commit('updateUser', {
           username: this.username,
@@ -115,13 +122,6 @@ export default {
         this.$store.commit('updateIsLogin', true)
         this.$store.commit('updateJxxtLogin', true)
         this.$store.commit('updateMyncmcLogin', true)
-
-        // 仅当不同用户登录的时候才清理缓存
-        // 充分利用缓存
-        if (this.username !== this.$store.state.username) {
-          this.$store.commit('removeCourses')
-          this.$store.commit('removeScoreReport')
-        }
 
         this.$router.push('/')
       } catch (e) {

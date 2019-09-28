@@ -3,6 +3,14 @@
     <v-container>
       <!-- 非首页的情况，展示资源目录 -->
       <v-row v-if="courseId">
+        <v-col cols="12" sm="6" md="4" lg="3">
+          <v-card @click="$router.back()">
+            <v-card-text class="d-flex flex-row align-center">
+              <v-icon color="white" class="mr-4">arrow_back</v-icon>
+              返回上一级
+            </v-card-text>
+          </v-card>
+        </v-col>
         <v-col
           v-for="(resource, index) in resources"
           :key="index"
@@ -61,9 +69,7 @@ export default {
       mescrollDown: {
         // 当是首页且没获取到资源的时候才刷新
         auto:
-          this.$store.state.courses.length === 0 &&
-          !this.$route.params.courseId,
-        autoShowLoading: true,
+          this.$store.state.courses.length === 0 || this.$route.params.courseId,
         callback: this.downCallback
       }
     }

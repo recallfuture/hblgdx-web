@@ -1,5 +1,5 @@
 <template>
-  <v-bottom-navigation grow app>
+  <v-bottom-navigation grow absolute>
     <v-btn
       v-for="(route, index) in routes"
       :key="index"

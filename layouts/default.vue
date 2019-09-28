@@ -32,13 +32,13 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <bottom-nav></bottom-nav>
     <v-app-bar fixed app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title v-text="$store.state.title" />
     </v-app-bar>
     <v-content>
       <nuxt />
+      <bottom-nav></bottom-nav>
     </v-content>
 
     <v-dialog v-model="logoutDialog" width="500">
@@ -137,9 +137,9 @@ export default {
 }
 
 .mescroll {
-  position: fixed;
-  top: 60px;
-  bottom: 0;
+  position: absolute;
+  top: 0;
+  bottom: 50px;
   height: auto; /* 如设置bottom:50px,则需height:auto才能生效 */
 }
 </style>

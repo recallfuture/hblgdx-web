@@ -16,6 +16,14 @@
     </v-dialog>
     <v-container>
       <v-row>
+        <v-col cols="12" sm="6" md="4" lg="3">
+          <v-card @click="$router.back()">
+            <v-card-text class="d-flex flex-row align-center">
+              <v-icon color="white" class="mr-4">arrow_back</v-icon>
+              返回上一级
+            </v-card-text>
+          </v-card>
+        </v-col>
         <v-col
           v-for="(homework, index) in homeworks"
           :key="index"
@@ -52,7 +60,6 @@ export default {
     return {
       mescroll: null, // mescroll实例对象
       mescrollDown: {
-        autoShowLoading: true,
         callback: this.downCallback
       },
       homeworks: [], // 列表数据
